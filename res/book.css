@@ -40,13 +40,13 @@ body.off{
 .radio-btn-wrap label{
     cursor: pointer;
     transform: translateY(3px);
-    margin-right: 4px;
 }
 
 
 .radio-btn-wrap{
     display: flex;
     align-items: center;
+    margin-right: 5px;
 }
 
 .search-box{

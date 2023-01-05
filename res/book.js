@@ -4,23 +4,40 @@ let searchBtn = $('.search-btn');
 let bookSearch = $('.book-search');
 let pageNation = $('.page-nation');
 let modal = $('#modal');
-let limitCount = 10;
+let limitCount = 10; //page 네이션 번호넘버
 let currentPage = 1;
 
+
 searchBtn.on('click', function(event){
-    if($('.book-search').val() == "") return;
+    let value = $('.book-search').val();
+    if($('.book-search').val() == "") {
+        alert('검색어를 입력해주세요');
+        return;
+    }
     ajax();
+    localStorage.setItem('검색어',value);
 });
 
 function enterkey(){
     if(window.event.keyCode == 13){
-        if( $('.book-search').val() == "") return;
+        let value = $('.book-search').val();
+        if( $('.book-search').val() == "") {
+            alert('검색어를 입력해주세요');
+            return;
+        }
         ajax();
+        localStorage.setItem('검색어',value);
     }
 }
 
 function ajax(pageText=1,pageInx){
     let value = $('.book-search').val();
+    
+    let storeValue = localStorage.getItem('검색어');
+    
+    if(value == ""){
+        value = storeValue;
+    }
     let targetType = $('input[name="searchType"]:checked').val();
     let sortType = $('input[name="sortType"]:checked').val();
     let pageNum = pageText;
@@ -51,6 +68,7 @@ function ajax(pageText=1,pageInx){
             if(arrLen == 0){
                 alert('검색 도서가 없습니다.');
                 $('.book-search').val("");
+                $('.total-info').removeClass('on');
             }
 
             for(let i=0;i<arrLen;i++){
@@ -63,9 +81,8 @@ function ajax(pageText=1,pageInx){
                 <p class="authors">${msg.documents[i].authors}</p>
                 <p class="publisher">${msg.documents[i].publisher}</p>
             </li>`
-                        
             $('.book-list-wrap').append(html);
-           
+        
             }
             let mainThumb = $('.thumb-img')
             imgError(mainThumb);
@@ -81,26 +98,27 @@ function ajax(pageText=1,pageInx){
                 modal.addClass('on');
                 $('body').addClass('off');
                 let idx = $(this).index();
-               
-                    $('.book-info-title').text(msg.documents[idx].title);
-                    $('.book-info-thumb').html(`<img class="info-thumb-img" src=${msg.documents[idx].thumbnail}/>`);
-                    $('.more-book-authors').text(msg.documents[idx].authors);
-                    $('.more-book-price').text(msg.documents[idx].price+'원');
-                    $('.more-book-isbn').text(msg.documents[idx].isbn);
-                    $('.more-book-publisher').text(msg.documents[idx].publisher);
-                    $('.more-book-status').text(msg.documents[idx].status);
-                    if(msg.documents[idx].contents===''){
-                        $('.book-more-text').text('정보가 없습니다.');
-                    }else{
-                        $('.book-more-text').text(msg.documents[idx].contents);
-                    }
-                    $('.book-more-link').attr("href",msg.documents[idx].url);
-                 
-                    let infoThumb = $('.info-thumb-img')
-                    imgError(infoThumb);
+            
+                $('.book-info-title').text(msg.documents[idx].title);
+                $('.book-info-thumb').html(`<img class="info-thumb-img" src=${msg.documents[idx].thumbnail}/>`);
+                $('.more-book-authors').text(msg.documents[idx].authors);
+                msg.documents[idx].translators.length === 0 ? $('.more-book-translators').text("-") : $('.more-book-translators').text(msg.documents[idx].translators);
+                $('.more-book-price').text(msg.documents[idx].price.toLocaleString()+'원');
+                $('.more-book-isbn').text(msg.documents[idx].isbn);
+                $('.more-book-publisher').text(msg.documents[idx].publisher);
+                $('.more-book-status').text(msg.documents[idx].status);
+                if(msg.documents[idx].contents===''){
+                    $('.book-more-text').text('정보가 없습니다.');
+                }else{
+                    $('.book-more-text').text(msg.documents[idx].contents);
+                }
+                $('.book-more-link').attr("href",msg.documents[idx].url);
+                
+                let infoThumb = $('.info-thumb-img')
+                imgError(infoThumb);
             });
 
-           
+        
         });
 }
 
@@ -172,10 +190,6 @@ function goNextPage(){
     currentPage += limitCount;
     render(currentPage);
     ajax(currentPage);
-}
-
-function onErrorImage(){
-    console.log(this);
 }
 
 //이미지 로딩 오류
