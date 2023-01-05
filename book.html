@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서관</title>
+
+    <link rel="stylesheet" href="./res/reset.css">
+    <link rel="stylesheet" href="./res/book.css">
+</head>
+<body>
+    
+    <div class="wrap">
+        <header class="header">
+            <h1>도서 검색</h1>
+        </header>
+        <main class="main">
+            
+                <div class="radio-wrap">
+                    <div class="target-type-box">
+                        <div class="radio-btn-wrap">
+                            <label for="radio1">전체</label>
+                            <input type="radio" id="radio1" name="searchType" value="all" checked>
+                        </div>
+                        <div class="radio-btn-wrap">
+                            <label for="radio2">제목</label>
+                            <input type="radio" id="radio2" name="searchType" value="title">
+                        </div>
+                        <div class="radio-btn-wrap">
+                            <label for="radio3">작가</label>
+                            <input type="radio" id="radio3" name="searchType" value="person">
+                        </div>
+                    </div>
+                    <div class="sort-type-box">
+                        <div class="radio-btn-wrap">
+                            <label for="sort1">정확도순</label>
+                            <input type="radio" id="sort1" name="sortType" value="accuracy" checked>
+                        </div>
+                        <div class="radio-btn-wrap">
+                            <label for="sort2">발간일순</label>
+                            <input type="radio" id="sort2" name="sortType" value="latest">
+                        </div>
+                    </div>
+            
+                </div>
+                <div class="search-box">
+                    <input type="text" class="book-search" placeholder="검색어를 입력해주세요" onkeypress="enterkey()">
+                    <button type="button" class="search-btn">검색</button>
+                </div>
+    
+            <div class="book-list-container">
+                <ul class="book-list-wrap">
+                </ul>
+            </div>
+
+            <div class="page-nation-wrap">
+                <ul class="page-nation">
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal">
+        <div class="modal-container">
+            <haedr class="modal-header">
+                <h2 class="modal-title">상세정보</h2>
+                <button type="button" class="close-btn">close</button>
+            </haedr>
+            <div class="modal-body">
+                <div class="book-info-wrap">
+                    <h3 class="book-info-title">미움받을 용기</h3>
+                    <div class="book-more-box">
+                        <div class="book-info-thumb"></div>
+                        <div class="book-info-more">
+                            <ul>
+                                <li>
+                                    <span class="more-title">저자사항</span>
+                                    <span class="more-desc more-book-authors">이진화</span>
+                                </li>
+                                <li>
+                                    <span class="more-title">도서 정가</span>
+                                    <span class="more-desc more-book-price">100원</span>
+                                </li>
+                                <li>
+                                    <span class="more-title">ISBN</span>
+                                    <span class="more-desc more-book-isbn">isbn</span>
+                                </li>
+                                <li>
+                                    <span class="more-title">출판사</span>
+                                    <span class="more-desc more-book-publisher">publisher</span>
+                                </li>
+                                <li>
+                                    <span class="more-title">판매 상태</span>
+                                    <span class="more-desc more-book-status">status</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="book-more-wrap">
+                        <div class="book-more-header">
+                            <h3>상세 정보</h3>
+                            <a class="book-more-link" href="#" target="blank">도서정보 상세보기</a> Daum 제공
+                        </div>
+                        <p class="book-more-text">contents</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./res/plugins/jquery-3.6.0.min.js"></script>
+    <script src="./res/book.js"></script>
+
+</body>
+
+</html>
