@@ -37,7 +37,8 @@ function ajax(pageText=1,pageInx){
             },
         headers : {Authorization: "KakaoAK 89978fd2907d1a3e408ed5fb69c9fd82"},
         success : function(data, status, xhr){
-
+            $('.total-num').text(data.meta.pageable_count);
+            $('.total-info').addClass('on');
             let totalPage = Math.round(data.meta.pageable_count / 30); //토탈 페이지 번호
             render(currentPage, totalPage, pageNum);
         }
@@ -64,6 +65,7 @@ function ajax(pageText=1,pageInx){
             </li>`
                         
             $('.book-list-wrap').append(html);
+           
             }
             let mainThumb = $('.thumb-img')
             imgError(mainThumb);
@@ -79,6 +81,7 @@ function ajax(pageText=1,pageInx){
                 modal.addClass('on');
                 $('body').addClass('off');
                 let idx = $(this).index();
+               
                     $('.book-info-title').text(msg.documents[idx].title);
                     $('.book-info-thumb').html(`<img class="info-thumb-img" src=${msg.documents[idx].thumbnail}/>`);
                     $('.more-book-authors').text(msg.documents[idx].authors);
@@ -86,7 +89,11 @@ function ajax(pageText=1,pageInx){
                     $('.more-book-isbn').text(msg.documents[idx].isbn);
                     $('.more-book-publisher').text(msg.documents[idx].publisher);
                     $('.more-book-status').text(msg.documents[idx].status);
-                    $('.book-more-text').text(msg.documents[idx].contents+'...');
+                    if(msg.documents[idx].contents===''){
+                        $('.book-more-text').text('정보가 없습니다.');
+                    }else{
+                        $('.book-more-text').text(msg.documents[idx].contents);
+                    }
                     $('.book-more-link').attr("href",msg.documents[idx].url);
                  
                     let infoThumb = $('.info-thumb-img')
